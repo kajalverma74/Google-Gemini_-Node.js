@@ -2,13 +2,13 @@ require('dotenv').config();
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const path = require('path'); // To serve static files
+const path = require('path');
 const app = express();
 
 app.use(express.json());
 app.use(bodyParser.json());
 
-// Serve static frontend files from the 'public' folder
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 
@@ -21,8 +21,11 @@ app.post('/api/content', async (req, res) => {
         const data = req.body.question; 
         const result = await generate(data);
         console.log("Generated Result: ", result);
+     
+
+        const formattedResult = `<p>${result.replace(/\n/g, '<br />')}</p>`; 
         res.send({
-            "result": result
+            "result": formattedResult
         });
     } catch (err) {
         res.send('Error: ' + err.message);
@@ -36,7 +39,7 @@ const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 const generate = async (prompt) => {
     try {
         const result = await model.generateContent(prompt);
-        return result.response.text();
+        return result.response.text(); 
     } catch (err) {
         console.log(err);
         throw err;

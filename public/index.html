@@ -67,7 +67,7 @@
         }
 
         button:hover {
-            background-color: #16a085;
+            background-color: #7ee9d4;
         }
 
         h2 {
@@ -120,10 +120,11 @@
                 });
 
                 const data = await response.json();
-                document.getElementById('result').textContent = data.result;
+                // Use innerHTML to render HTML content
+                document.getElementById('result').innerHTML = data.result; 
                 document.getElementById('result').style.height = "auto"; 
             } catch (err) {
-                document.getElementById('result').textContent = 'Error: ' + err.message;
+                document.getElementById('result').innerHTML = 'Error: ' + err.message; 
             }
         });
     </script>
